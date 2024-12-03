@@ -1,0 +1,174 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "salesorderbom",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.15.1",
+      "toolsId": "4e03766c-e301-454c-91e4-f9f50b8a4558"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/myservice/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.131.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "salesorderbom.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": []
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "SalesOrderBOMList",
+          "target": "SalesOrderBOMList"
+        },
+        {
+          "pattern": "SalesOrderBOM({key}):?query:",
+          "name": "SalesOrderBOMObjectPage",
+          "target": "SalesOrderBOMObjectPage"
+        },
+        {
+          "pattern": "SalesOrderBOM({key})/BOMItems({key2}):?query:",
+          "name": "SalesOrderBOMItemsObjectPage",
+          "target": "SalesOrderBOMItemsObjectPage"
+        }
+      ],
+      "targets": {
+        "SalesOrderBOMList": {
+          "type": "Component",
+          "id": "SalesOrderBOMList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "initialLoad": true,
+              "contextPath": "/SalesOrderBOM",
+              "variantManagement": "Page",
+              "navigation": {
+                "SalesOrderBOM": {
+                  "detail": {
+                    "route": "SalesOrderBOMObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable"
+                  },
+                  "actions": {
+                    "upload": {
+                      "press": "salesorderbom.ext.upload.upload.Upload",
+                      "visible": true,
+                      "enabled": true,
+                      "requiresSelection": false,
+                      "text": "Upload"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "SalesOrderBOMObjectPage": {
+          "type": "Component",
+          "id": "SalesOrderBOMObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/SalesOrderBOM",
+              "navigation": {
+                "BOMItems": {
+                  "detail": {
+                    "route": "SalesOrderBOMItemsObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "SalesOrderBOMItemsObjectPage": {
+          "type": "Component",
+          "id": "SalesOrderBOMItemsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/SalesOrderBOM/BOMItems"
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  }
+}

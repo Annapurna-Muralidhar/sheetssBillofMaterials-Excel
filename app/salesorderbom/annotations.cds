@@ -1,0 +1,1 @@
+using Myservice as service from '../../srv/sat';
